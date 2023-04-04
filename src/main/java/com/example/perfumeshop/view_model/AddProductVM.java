@@ -1,7 +1,6 @@
 package com.example.perfumeshop.view_model;
 
 import com.example.perfumeshop.model.ShopProduct;
-import com.example.perfumeshop.view_model.commands.Command;
 import com.example.perfumeshop.view_model.commands.ProductPresenter;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -89,10 +88,10 @@ public class AddProductVM implements Initializable {
             if(isEditing) {
 //                productPresenter.updateProduct(productToUpdate.getId(),nameText, brandText, availabilityCheck, priceText, idShop);
                 var products = productPresenter.updateProductInShop(productToUpdate.getProduct(), stockText, idShop);
-                Command.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, products);
+                ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, products);
             } else {
                 var products = productPresenter.addProduct(nameText, brandText, stockText, priceText, idShop);
-                Command.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, products);
+                ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, products);
             }
         });
     }

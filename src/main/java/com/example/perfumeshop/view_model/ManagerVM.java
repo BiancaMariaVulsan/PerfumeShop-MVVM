@@ -1,7 +1,6 @@
 package com.example.perfumeshop.view_model;
 
 import com.example.perfumeshop.model.Product;
-import com.example.perfumeshop.view_model.commands.Command;
 import com.example.perfumeshop.view_model.commands.ICommand;
 import com.example.perfumeshop.view_model.commands.ProductPresenter;
 import com.example.perfumeshop.view_model.commands.FilterProductsCommand;
@@ -48,19 +47,19 @@ public class ManagerVM implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Command.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn);
+        ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn);
 
         filterButton.setOnAction(e -> {
             var filteredItems = productPresenter.filterProducts(nameFilter, brandFilter, availabilityFilter, priceFilter);
-            Command.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, filteredItems);
+            ViewModel.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, filteredItems);
         });
         sortNameButton.setOnAction(e -> {
             var sortedItems = productPresenter.sortByName();
-            Command.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, sortedItems);
+            ViewModel.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, sortedItems);
         });
         sortPriceButton.setOnAction(e -> {
             var sortedItems = productPresenter.sortByPrice();
-            Command.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, sortedItems);
+            ViewModel.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, sortedItems);
         });
     }
 }

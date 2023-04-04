@@ -24,6 +24,11 @@ public class Person {
         this.password.set(password);
     }
 
+    public Person(String username, String password) {
+        this.username.set(username);
+        this.password.set(password);
+    }
+
     public Person(String firstName, String lastName, Role role, String username, String password) {
         this.firstName.set(firstName);
         this.lastName.set(lastName);

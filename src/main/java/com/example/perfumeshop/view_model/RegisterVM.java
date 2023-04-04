@@ -55,6 +55,7 @@ public class RegisterVM implements Initializable
 
     private final AddPersonCommand addPersonCommand = new AddPersonCommand();
     private final UpdatePersonCommand updatePersonCommand = new UpdatePersonCommand();
+    private ViewModel viewModel = new ViewModel();
 
     public RegisterVM() {
         this.isEditing = false;
@@ -101,7 +102,7 @@ public class RegisterVM implements Initializable
         }
 
         exitButton.setOnAction(actionEvent -> {
-            Optional<ButtonType> result = Command.initAlarmBox("Exit", "Are you sure you want to exit? All progress will be lost.", Alert.AlertType.CONFIRMATION);
+            Optional<ButtonType> result = ViewModel.initAlarmBox("Exit", "Are you sure you want to exit? All progress will be lost.", Alert.AlertType.CONFIRMATION);
             if(result.get() == ButtonType.OK) {
                 Stage stage = (Stage) registerButton.getScene().getWindow();
                 stage.close();
@@ -119,10 +120,10 @@ public class RegisterVM implements Initializable
         registerButton.setOnAction(actionEvent -> {
             if(!isEditing) {
                 register();
-                Command.populateTablePersons(personTableView, personItems, firstNameColumn, lastNameColumn, roleColumn);
+                viewModel.populateTablePersons(personTableView, personItems, firstNameColumn, lastNameColumn, roleColumn);
             } else {
                 updatePerson(personToUpdate);
-                Command.populateTablePersons(personTableView, personItems, firstNameColumn, lastNameColumn, roleColumn);
+                viewModel.populateTablePersons(personTableView, personItems, firstNameColumn, lastNameColumn, roleColumn);
             }
         });
         roleChoiceBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
@@ -144,11 +145,11 @@ public class RegisterVM implements Initializable
         }
         addPersonCommand.setPerson(person);
         if(addPersonCommand.execute()) {
-            Command.initAlarmBox("Successful registration", "You are successfully registered!", Alert.AlertType.INFORMATION);
+            ViewModel.initAlarmBox("Successful registration", "You are successfully registered!", Alert.AlertType.INFORMATION);
             Stage stage = (Stage) registerButton.getScene().getWindow();
             stage.close();
         } else {
-            Command.initAlarmBox("Error", "An error occurred during the registration, please try again!", Alert.AlertType.ERROR);
+            ViewModel.initAlarmBox("Error", "An error occurred during the registration, please try again!", Alert.AlertType.ERROR);
         }
     }
 
@@ -165,11 +166,11 @@ public class RegisterVM implements Initializable
         }
         updatePersonCommand.setPerson(personToUpdate);
         if(updatePersonCommand.execute()) {
-            Command.initAlarmBox("Successful registration", "Person successfully updated!", Alert.AlertType.INFORMATION);
+            ViewModel.initAlarmBox("Successful registration", "Person successfully updated!", Alert.AlertType.INFORMATION);
             Stage stage = (Stage) registerButton.getScene().getWindow();
             stage.close();
         } else {
-            Command.initAlarmBox("Error", "An error occurred during the registration, please try again!", Alert.AlertType.ERROR);
+            ViewModel.initAlarmBox("Error", "An error occurred during the registration, please try again!", Alert.AlertType.ERROR);
         }
     }
 

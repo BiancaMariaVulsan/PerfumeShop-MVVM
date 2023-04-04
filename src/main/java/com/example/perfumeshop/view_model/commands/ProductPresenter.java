@@ -3,6 +3,7 @@ package com.example.perfumeshop.view_model.commands;
 import com.example.perfumeshop.model.Product;
 import com.example.perfumeshop.model.ShopProduct;
 import com.example.perfumeshop.model.persistence.ProductPersistence;
+import com.example.perfumeshop.view_model.ViewModel;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -112,21 +113,21 @@ public class ProductPresenter {
             productPersistence.insertProductInShop(shopId, insertedProduct.getId(), stock);
             productsMap = getProductsMap();
         } catch (Exception e) {
-            Command.initAlarmBox("Error", "Something went wrong when trying to add the product. Please make sure you insert valid properties!", Alert.AlertType.ERROR);
+            ViewModel.initAlarmBox("Error", "Something went wrong when trying to add the product. Please make sure you insert valid properties!", Alert.AlertType.ERROR);
         }
         return productsMap.get(shopId);
     }
 
     public List<ShopProduct> deleteProduct(Product product, int shopId) {
         if(product == null) {
-            Command.initAlarmBox("Warning", "Please select the product to be deleted!", Alert.AlertType.WARNING);
+            ViewModel.initAlarmBox("Warning", "Please select the product to be deleted!", Alert.AlertType.WARNING);
         } else {
             try {
 //            productPersistence.delete(product);
                 productPersistence.deleteProductFromShop(shopId, product.getId());
                 productsMap = getProductsMap();
             } catch (Exception e) {
-                Command.initAlarmBox("Warning", "Something went wrong!", Alert.AlertType.WARNING);
+                ViewModel.initAlarmBox("Warning", "Something went wrong!", Alert.AlertType.WARNING);
             }
         }
         return  productsMap.get(shopId);
@@ -138,7 +139,7 @@ public class ProductPresenter {
             productPersistence.update(product);
             return true;
         } catch (Exception e) {
-            Command.initAlarmBox("Error", "Something went wrong when trying to update the product. Please make sure you insert valid properties!", Alert.AlertType.ERROR);
+            ViewModel.initAlarmBox("Error", "Something went wrong when trying to update the product. Please make sure you insert valid properties!", Alert.AlertType.ERROR);
             return false;
         }
     }
@@ -154,7 +155,7 @@ public class ProductPresenter {
                 }
             }
         } catch (Exception e) {
-            Command.initAlarmBox("Error", "Something went wrong when trying to update the stock of the the product. Please make sure you insert valid properties!", Alert.AlertType.ERROR);
+            ViewModel.initAlarmBox("Error", "Something went wrong when trying to update the stock of the the product. Please make sure you insert valid properties!", Alert.AlertType.ERROR);
         }
         return productsMap.get(shopId);
     }

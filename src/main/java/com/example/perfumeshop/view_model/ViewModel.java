@@ -1,8 +1,10 @@
-package com.example.perfumeshop.view_model.commands;
+package com.example.perfumeshop.view_model;
 
 import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Product;
 import com.example.perfumeshop.model.ShopProduct;
+import com.example.perfumeshop.view_model.commands.GetPersonsCommand;
+import com.example.perfumeshop.view_model.commands.ProductPresenter;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -18,21 +20,23 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public class Command {
+public class ViewModel {
     static ProductPresenter productPresenter = new ProductPresenter();
+
+    private GetPersonsCommand getPersonsCommand = new GetPersonsCommand();
 
     public static void loadFXML(String fxmlFile, Callback<Class<?>, Object> controllerFactory) {
         Stage programStage = new Stage();
         Parent programRoot;
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Command.class.getResource(fxmlFile));
+            FXMLLoader fxmlLoader = new FXMLLoader(ViewModel.class.getResource(fxmlFile));
             fxmlLoader.setControllerFactory(controllerFactory);
-            var path = Command.class.getResource(fxmlFile);
+            var path = ViewModel.class.getResource(fxmlFile);
             fxmlLoader.setLocation(path);
             programRoot = fxmlLoader.load();
             Scene programScene = new Scene(programRoot);
-            String css = Command.class.getResource("/com/example/perfumeshop/start.css").toExternalForm();
+            String css = ViewModel.class.getResource("/com/example/perfumeshop/start.css").toExternalForm();
             programScene.getStylesheets().add(css);
             programStage.setTitle("Running Program");
             programStage.setScene(programScene);
@@ -103,14 +107,18 @@ public class Command {
         productTableView.setItems(productItems);
     }
 
-    public static void populateTablePersons(TableView<Person> personTableView, ObservableList<Person> personItems, TableColumn<Person, String> firstNameColumn,
+    public void populateTablePersons(TableView<Person> personTableView, ObservableList<Person> personItems, TableColumn<Person, String> firstNameColumn,
                                             TableColumn<Person ,String> lastNameColumn, TableColumn<Person, String> roleColumn){
         personItems.clear();
         personTableView.getItems().clear();
         firstNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getFirstName()));
         lastNameColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getLastName()));
         roleColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getRole().toString()));
-        personItems.addAll(PersonPresenter.getPersons());
+        if(getPersonsCommand.execute()) {
+            personItems.addAll(getPersonsCommand.getPersons());
+        } else {
+            ViewModel.initAlarmBox("Error", "Error while popilating the table!", Alert.AlertType.ERROR);
+        }
         personTableView.setItems(personItems);
     }
 }

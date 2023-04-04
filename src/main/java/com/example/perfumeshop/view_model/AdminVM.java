@@ -2,8 +2,6 @@ package com.example.perfumeshop.view_model;
 
 import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.view_model.commands.DeletePersonCommand;
-import com.example.perfumeshop.view_model.commands.PersonPresenter;
-import com.example.perfumeshop.view_model.commands.Command;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -35,10 +33,11 @@ public class AdminVM implements Initializable {
     private Button editButton;
 
     private final DeletePersonCommand deletePersonCommand = new DeletePersonCommand();
+    private final ViewModel viewModel = new ViewModel();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Command.populateTablePersons(personTableView, personItems, firstNameColumn, lastNameColumn, roleColumn);
+        viewModel.populateTablePersons(personTableView, personItems, firstNameColumn, lastNameColumn, roleColumn);
         addButton.setOnAction(e -> {
             Callback<Class<?>, Object> controllerFactory = type -> {
                 if (type == RegisterVM.class) {
@@ -52,25 +51,25 @@ public class AdminVM implements Initializable {
                     }
                 }
             };
-            Command.loadFXML("/com/example/perfumeshop/register-view.fxml", controllerFactory);
+            ViewModel.loadFXML("/com/example/perfumeshop/register-view.fxml", controllerFactory);
         });
         deleteButton.setOnAction(e -> {
             var person = personTableView.getSelectionModel().getSelectedItem();
             if(person == null) {
-                Command.initAlarmBox("Warning", "Please select the product to be deleted!", Alert.AlertType.WARNING);
+                ViewModel.initAlarmBox("Warning", "Please select the product to be deleted!", Alert.AlertType.WARNING);
                 return;
             }
             deletePersonCommand.setPerson(person);
             if(deletePersonCommand.execute()) {
-                Command.populateTablePersons(personTableView, personItems, firstNameColumn, lastNameColumn, roleColumn);
+                viewModel.populateTablePersons(personTableView, personItems, firstNameColumn, lastNameColumn, roleColumn);
             } else {
-                Command.initAlarmBox("Warning", "Delete operation failed, please try again!", Alert.AlertType.WARNING);
+                ViewModel.initAlarmBox("Warning", "Delete operation failed, please try again!", Alert.AlertType.WARNING);
             }
         });
         editButton.setOnAction(e -> {
             Person item = personTableView.getSelectionModel().getSelectedItem();
             if(item == null) {
-                Command.initAlarmBox("Warning", "Please select the product to be edited!", Alert.AlertType.WARNING);
+                ViewModel.initAlarmBox("Warning", "Please select the product to be edited!", Alert.AlertType.WARNING);
                 return;
             }
             Callback<Class<?>, Object> controllerFactory = type -> {
@@ -85,7 +84,7 @@ public class AdminVM implements Initializable {
                     }
                 }
             };
-            Command.loadFXML("/com/example/perfumeshop/register-view.fxml", controllerFactory);
+            ViewModel.loadFXML("/com/example/perfumeshop/register-view.fxml", controllerFactory);
         });
     }
 }

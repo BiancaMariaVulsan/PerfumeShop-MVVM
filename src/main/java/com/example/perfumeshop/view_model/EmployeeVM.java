@@ -1,7 +1,6 @@
 package com.example.perfumeshop.view_model;
 
 import com.example.perfumeshop.model.ShopProduct;
-import com.example.perfumeshop.view_model.commands.Command;
 import com.example.perfumeshop.view_model.commands.ProductPresenter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,7 +50,7 @@ public class EmployeeVM implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Command.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
+        ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
         addButton.setOnAction(e -> {
             Callback<Class<?>, Object> controllerFactory = type -> {
                 if (type == AddProductVM.class) {
@@ -65,20 +64,20 @@ public class EmployeeVM implements Initializable {
                     }
                 }
             };
-            Command.loadFXML("/com/example/perfumeshop/add-product-view.fxml", controllerFactory);
+            ViewModel.loadFXML("/com/example/perfumeshop/add-product-view.fxml", controllerFactory);
         });
         deleteButton.setOnAction(e -> {
             var products = productPresenter.deleteProduct(productTableView.getSelectionModel().getSelectedItem().getProduct(), idShop);
-            Command.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, products);
+            ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, products);
         });
         filterButton.setOnAction(e -> {
             var filteredItems = productPresenter.filterProducts(brandFilter, availabilityFilter, priceFilter, idShop);
-            Command.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, filteredItems);
+            ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, filteredItems);
         });
         editButton.setOnAction(e -> {
             ShopProduct product = productTableView.getSelectionModel().getSelectedItem();
             if(product == null) {
-                Command.initAlarmBox("Warning", "Please select the product to be updated!", Alert.AlertType.WARNING);
+                ViewModel.initAlarmBox("Warning", "Please select the product to be updated!", Alert.AlertType.WARNING);
                 return;
             }
             Callback<Class<?>, Object> controllerFactory = type -> {
@@ -93,7 +92,7 @@ public class EmployeeVM implements Initializable {
                     }
                 }
             };
-            Command.loadFXML("/com/example/perfumeshop/add-product-view.fxml", controllerFactory);
+            ViewModel.loadFXML("/com/example/perfumeshop/add-product-view.fxml", controllerFactory);
         });
     }
 }
