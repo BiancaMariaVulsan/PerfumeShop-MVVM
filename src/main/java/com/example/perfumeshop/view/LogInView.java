@@ -1,7 +1,8 @@
-package com.example.perfumeshop.view_model;
+package com.example.perfumeshop.view;
 
 import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Role;
+import com.example.perfumeshop.view_model.ViewModel;
 import com.example.perfumeshop.view_model.commands.GetShopCommand;
 import com.example.perfumeshop.view_model.commands.LoginCommand;
 import javafx.fxml.FXML;
@@ -10,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
-public class LogInVM {
+public class LogInView {
     @FXML
     private TextField usernameTextField;
     @FXML
@@ -43,8 +44,8 @@ public class LogInVM {
         }
         if (personDb.getRole().equals(Role.ADMIN)) {
             Callback<Class<?>, Object> controllerFactory = type -> {
-                if (type == AdminVM.class) {
-                    return new AdminVM();
+                if (type == AdminView.class) {
+                    return new AdminView();
                 } else {
                     try {
                         return type.newInstance();
@@ -57,8 +58,8 @@ public class LogInVM {
             ViewModel.loadFXML("/com/example/perfumeshop/admin-view.fxml", controllerFactory);
         } else if (personDb.getRole().equals(Role.MANAGER)) {
             Callback<Class<?>, Object> controllerFactory = type -> {
-                if (type == ManagerVM.class) {
-                    return new ManagerVM();
+                if (type == ManagerView.class) {
+                    return new ManagerView();
                 } else {
                     try {
                         return type.newInstance();
@@ -72,8 +73,8 @@ public class LogInVM {
         } else {
             Callback<Class<?>, Object> controllerFactory = type -> {
                 getShopCommand.setUsername(username);
-                if (type == EmployeeVM.class && getShopCommand.execute()) {
-                    return new EmployeeVM(getShopCommand.getShopId());
+                if (type == EmployeeView.class && getShopCommand.execute()) {
+                    return new EmployeeView(getShopCommand.getShopId());
                 } else {
                     try {
                         return type.newInstance();

@@ -1,6 +1,7 @@
-package com.example.perfumeshop.view_model;
+package com.example.perfumeshop.view;
 
 import com.example.perfumeshop.model.Product;
+import com.example.perfumeshop.view_model.ViewModel;
 import com.example.perfumeshop.view_model.commands.ICommand;
 import com.example.perfumeshop.view_model.commands.ProductPresenter;
 import com.example.perfumeshop.view_model.commands.FilterProductsCommand;
@@ -13,7 +14,7 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ManagerVM implements Initializable {
+public class ManagerView implements Initializable {
     @FXML
     private TableView<Product> productTableView;
     private final ObservableList<Product> productItems = FXCollections.observableArrayList();

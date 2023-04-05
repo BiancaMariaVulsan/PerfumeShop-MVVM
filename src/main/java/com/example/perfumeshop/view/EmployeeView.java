@@ -1,6 +1,7 @@
-package com.example.perfumeshop.view_model;
+package com.example.perfumeshop.view;
 
 import com.example.perfumeshop.model.ShopProduct;
+import com.example.perfumeshop.view_model.ViewModel;
 import com.example.perfumeshop.view_model.commands.ProductPresenter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +13,7 @@ import javafx.util.Callback;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EmployeeVM implements Initializable {
+public class EmployeeView implements Initializable {
     @FXML
     private TableView<ShopProduct> productTableView;
     private final ObservableList<ShopProduct> productItems = FXCollections.observableArrayList();
@@ -44,7 +45,7 @@ public class EmployeeVM implements Initializable {
     private final int idShop;
     private final ProductPresenter productPresenter = new ProductPresenter();
 
-    public EmployeeVM(int isShop) {
+    public EmployeeView(int isShop) {
         this.idShop = isShop;
     }
 
@@ -53,8 +54,8 @@ public class EmployeeVM implements Initializable {
         ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
         addButton.setOnAction(e -> {
             Callback<Class<?>, Object> controllerFactory = type -> {
-                if (type == AddProductVM.class) {
-                    return new AddProductVM(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
+                if (type == AddProductView.class) {
+                    return new AddProductView(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
                 } else {
                     try {
                         return type.newInstance();
@@ -81,8 +82,8 @@ public class EmployeeVM implements Initializable {
                 return;
             }
             Callback<Class<?>, Object> controllerFactory = type -> {
-                if (type == AddProductVM.class) {
-                    return new AddProductVM(product, productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
+                if (type == AddProductView.class) {
+                    return new AddProductView(product, productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
                 } else {
                     try {
                         return type.newInstance();
