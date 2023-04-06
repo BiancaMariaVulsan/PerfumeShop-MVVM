@@ -8,14 +8,11 @@ import com.example.perfumeshop.view_model.commands.GetRoleByNameCommand;
 import com.example.perfumeshop.view_model.commands.GetShopIdByNameCommand;
 import com.example.perfumeshop.view_model.commands.UpdatePersonCommand;
 import javafx.beans.property.*;
-import javafx.collections.ObservableList;
 
 public class RegisterVM
 {
     private Person personToUpdate;
     private final boolean isEditing;
-
-    private ObservableList<Person> personItems;
     private final AddPersonCommand addPersonCommand = new AddPersonCommand();
     private final UpdatePersonCommand updatePersonCommand = new UpdatePersonCommand();
     private final GetRoleByNameCommand roleCommand = new GetRoleByNameCommand();
@@ -37,12 +34,8 @@ public class RegisterVM
     public RegisterVM() {
         this.isEditing = false;
     }
-    public RegisterVM(ObservableList<Person> personItems) {
-        this.isEditing = false;
-        this.personItems = personItems;
-    }
-    public RegisterVM(Person personToUpdate, ObservableList<Person> personItems) {
-        this.personItems = personItems;
+
+    public RegisterVM(Person personToUpdate) {
         this.personToUpdate = personToUpdate;
         this.isEditing = true;
         firstNameProperty.set(personToUpdate.getFirstName());
@@ -73,7 +66,8 @@ public class RegisterVM
                             lastNameProperty.get(), role, usernameProperty.get(),
                             passwordProperty.get());
                     addPersonCommand.setPerson(person);
-                    personItems.add(person);
+                    AdminVM adminVM = AdminVM.getInstance();
+                    adminVM.getPersonItems().add(person);
                     return addPersonCommand.execute();
                 } else {
                     return false;

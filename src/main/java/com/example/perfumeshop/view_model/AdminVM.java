@@ -18,21 +18,22 @@ public class AdminVM {
     private ObservableList<Person> personItems = FXCollections.observableArrayList();
 
     private final DeletePersonCommand deletePersonCommand = new DeletePersonCommand();
-    private RegisterVM registerVM;
 
-    public boolean addPerson() {
-        registerVM = new RegisterVM(personItems);
-        return registerVM.register();
+    private static final AdminVM adminVM = new AdminVM();
+    private AdminVM() {
+
+    }
+    public static AdminVM getInstance() {
+        return adminVM;
     }
 
     public void editPerson(TableView<Person> personTableView) {
-        registerVM = new RegisterVM(personItems);
         Person item = personTableView.getSelectionModel().getSelectedItem();
         if(item == null) {
             ViewModel.initAlarmBox("Warning", "Please select the product to be edited!", Alert.AlertType.WARNING);
             return;
         }
-        RegisterVM registerVM = new RegisterVM(item, personItems);
+        RegisterVM registerVM = new RegisterVM(item);
     }
 
     public void deletePerson(TableView<Person> personTableView) {

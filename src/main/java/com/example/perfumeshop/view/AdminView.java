@@ -3,7 +3,6 @@ package com.example.perfumeshop.view;
 import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.view_model.AdminVM;
 import com.example.perfumeshop.view_model.ViewModel;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,7 +31,7 @@ public class AdminView implements Initializable {
     private Button editButton;
 
     private final ViewModel viewModel = new ViewModel();
-    private AdminVM adminVM = new AdminVM();
+    private AdminVM adminVM = AdminVM.getInstance();
 
     public void bind() {
         firstNameColumn.textProperty().bindBidirectional(adminVM.firstNameColumnProperty());
@@ -50,7 +49,7 @@ public class AdminView implements Initializable {
         addButton.setOnAction(e -> {
             Callback<Class<?>, Object> controllerFactory = type -> {
                 if (type == RegisterView.class) {
-                    return new RegisterView(personTableView, firstNameColumn, lastNameColumn, roleColumn);
+                    return new RegisterView(false);
                 } else {
                     try {
                         return type.newInstance();
@@ -69,7 +68,7 @@ public class AdminView implements Initializable {
             adminVM.editPerson(personTableView);
             Callback<Class<?>, Object> controllerFactory = type -> {
                 if (type == RegisterView.class) {
-                    return new RegisterView(personTableView, firstNameColumn, lastNameColumn, roleColumn);
+                    return new RegisterView(true);
                 } else {
                     try {
                         return type.newInstance();

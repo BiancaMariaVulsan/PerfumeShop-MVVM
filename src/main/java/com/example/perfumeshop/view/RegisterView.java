@@ -1,6 +1,5 @@
 package com.example.perfumeshop.view;
 
-import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Role;
 import com.example.perfumeshop.model.Shop;
 import com.example.perfumeshop.view_model.AdminVM;
@@ -39,31 +38,12 @@ public class RegisterView implements Initializable {
     private ChoiceBox<String> roleChoiceBox;
     @FXML
     private ChoiceBox<String> shopChoiceBox;
-    @FXML
-    private TableView personTableView;
-    @FXML
-    private TableColumn firstNameColumn;
-    @FXML
-    private TableColumn lastNameColumn;
-    @FXML
-    private TableColumn roleColumn;
 
     private boolean isEditing;
     private final RegisterVM registerVM = new RegisterVM();
-    private final AdminVM adminVM = new AdminVM();
 
-    public RegisterView() {
-        this.isEditing = false;
-    }
-
-    public RegisterView(TableView<Person> personTableView,
-                      TableColumn<Person, String> firstNameColumn, TableColumn<Person, String> lastNameColumn,
-                      TableColumn<Person, String> roleColumn) {
-        this.isEditing = false;
-        this.personTableView = personTableView;
-        this.firstNameColumn = firstNameColumn;
-        this.lastNameColumn = lastNameColumn;
-        this.roleColumn = roleColumn;
+    public RegisterView(boolean isEditing) {
+        this.isEditing = isEditing;
     }
 
     public void bind() {
@@ -74,18 +54,15 @@ public class RegisterView implements Initializable {
         shopChoiceBox.valueProperty().bindBidirectional(registerVM.shopNamePropertyProperty());
         roleChoiceBox.valueProperty().bindBidirectional(registerVM.roleNamePropertyProperty());
         termsCheckBox.selectedProperty().bindBidirectional(registerVM.termsCheckPropertyProperty());
-        firstNameColumn.textProperty().bindBidirectional(registerVM.firstNameColumnProperty());
-        lastNameColumn.textProperty().bindBidirectional(registerVM.lastNameColumnProperty());
-        roleColumn.textProperty().bindBidirectional(registerVM.roleColumnProperty());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bind();
         registerButton.setDisable(true);
 //        setProgressIndicator();
         initRoleCheckBox();
         initShopCheckBox();
+        bind();
 
         exitButton.setOnAction(actionEvent -> {
             Optional<ButtonType> result = ViewModel.initAlarmBox("Exit", "Are you sure you want to exit? All progress will be lost.", Alert.AlertType.CONFIRMATION);
@@ -104,7 +81,7 @@ public class RegisterView implements Initializable {
             }
         });
         registerButton.setOnAction(actionEvent -> {
-            if(adminVM.addPerson()) {
+            if(registerVM.register()) {
                 ViewModel.initAlarmBox("Successful registration", "Person successfully registered!", Alert.AlertType.INFORMATION);
                 Stage stage = (Stage) registerButton.getScene().getWindow();
                 stage.close();
@@ -122,14 +99,14 @@ public class RegisterView implements Initializable {
         for(Shop shop: shops) {
             shopChoiceBox.getItems().add(shop.getName());
         }
-        shopChoiceBox.setValue(shops.get(0).getName()); // suppose there is at least one shop
+        registerVM.setShopNameProperty(shops.get(0).getName()); // suppose there is at least one shop
     }
 
     private void initRoleCheckBox() {
         roleChoiceBox.getItems().add("EMPLOYEE");
         roleChoiceBox.getItems().add("MANAGER");
         roleChoiceBox.getItems().add("ADMIN");
-        roleChoiceBox.setValue("EMPLOYEE");
+        registerVM.setRoleNameProperty("EMPLOYEE");
     }
 
     public void setProgressIndicator() {
