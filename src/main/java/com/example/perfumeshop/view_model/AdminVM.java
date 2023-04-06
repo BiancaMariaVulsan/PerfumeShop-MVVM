@@ -7,7 +7,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TableView;
+
+import java.util.stream.Collectors;
 
 public class AdminVM {
 
@@ -27,25 +28,11 @@ public class AdminVM {
         return adminVM;
     }
 
-//    public void editPerson(TableView<Person> personTableView) {
-//        Person item = personTableView.getSelectionModel().getSelectedItem();
-//        if(item == null) {
-//            ViewModel.initAlarmBox("Warning", "Please select the product to be edited!", Alert.AlertType.WARNING);
-//            return;
-//        }
-//        RegisterVM registerVM = new RegisterVM(item);
-//        registerVM.register();
-//    }
-
-    public void deletePerson(TableView<Person> personTableView) {
-        Person person = personTableView.getSelectionModel().getSelectedItem();
-        if(person == null) {
-            ViewModel.initAlarmBox("Warning", "Please select the product to be deleted!", Alert.AlertType.WARNING);
-            return;
-        }
-        deletePersonCommand.setPerson(person);
+    public void deletePerson(PersonVM person) {
+        Person personToDel = personItems.stream().filter(p -> p.usernameProperty().get().equals(person.usernameProperty().get())).toList().get(0);
+        deletePersonCommand.setPerson(personToDel);
         if(deletePersonCommand.execute()) {
-            personItems.remove(person);
+            personItems.remove(personToDel);
         } else {
             ViewModel.initAlarmBox("Warning", "Delete operation failed, please try again!", Alert.AlertType.WARNING);
         }

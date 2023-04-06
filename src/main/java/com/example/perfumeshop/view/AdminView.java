@@ -63,7 +63,8 @@ public class AdminView implements Initializable {
             ViewModel.loadFXML("/com/example/perfumeshop/register-view.fxml", controllerFactory);
         });
         deleteButton.setOnAction(e -> {
-            adminVM.deletePerson(personTableView);
+            PersonVM personVM = new PersonVM((Person) personTableView.getSelectionModel().getSelectedItem());
+            adminVM.deletePerson(personVM);
         });
         editButton.setOnAction(e -> {
             PersonVM personVM = new PersonVM((Person) personTableView.getSelectionModel().getSelectedItem());

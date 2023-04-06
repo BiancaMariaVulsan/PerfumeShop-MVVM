@@ -1,7 +1,6 @@
 package com.example.perfumeshop.model.persistence;
 
 import com.example.perfumeshop.model.Employee;
-import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Role;
 
 import java.sql.Connection;

@@ -95,7 +95,9 @@ public class RegisterView implements Initializable {
             }
         });
         registerButton.setOnAction(actionEvent -> {
-            registerVM.setPerson(personVM);
+            if(isEditing) {
+                registerVM.setPerson(personVM);
+            }
             if(registerVM.register()) {
                 ViewModel.initAlarmBox("Successful registration", "Person successfully registered!", Alert.AlertType.INFORMATION);
                 Stage stage = (Stage) registerButton.getScene().getWindow();
