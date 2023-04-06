@@ -2,7 +2,7 @@ package com.example.perfumeshop.view;
 
 import com.example.perfumeshop.model.Role;
 import com.example.perfumeshop.model.Shop;
-import com.example.perfumeshop.view_model.AdminVM;
+import com.example.perfumeshop.view_model.PersonVM;
 import com.example.perfumeshop.view_model.RegisterVM;
 import com.example.perfumeshop.view_model.ViewModel;
 import com.example.perfumeshop.view_model.commands.ShopPresenter;
@@ -41,9 +41,15 @@ public class RegisterView implements Initializable {
 
     private boolean isEditing;
     private final RegisterVM registerVM = new RegisterVM();
+    private PersonVM personVM;
 
-    public RegisterView(boolean isEditing) {
-        this.isEditing = isEditing;
+    public RegisterView() {
+        this.isEditing = false;
+    }
+
+    public RegisterView(PersonVM personVM) {
+        this.isEditing = true;
+        this.personVM = personVM;
     }
 
     public void bind() {
@@ -64,6 +70,14 @@ public class RegisterView implements Initializable {
         initShopCheckBox();
         bind();
 
+        if(isEditing) {
+            registerVM.setFirstNameProperty(personVM.firstNameProperty().get());
+            registerVM.setLastNameProperty(personVM.lastNameProperty().get());
+            registerVM.setUsernameProperty(personVM.usernameProperty().get());
+            registerVM.setPasswordProperty(personVM.passwordProperty().get());
+//            shopChoiceBox.setDisable(!personVM.roleProperty().get().equals(Role.EMPLOYEE));
+        }
+
         exitButton.setOnAction(actionEvent -> {
             Optional<ButtonType> result = ViewModel.initAlarmBox("Exit", "Are you sure you want to exit? All progress will be lost.", Alert.AlertType.CONFIRMATION);
             if(result.get() == ButtonType.OK) {
@@ -81,6 +95,7 @@ public class RegisterView implements Initializable {
             }
         });
         registerButton.setOnAction(actionEvent -> {
+            registerVM.setPerson(personVM);
             if(registerVM.register()) {
                 ViewModel.initAlarmBox("Successful registration", "Person successfully registered!", Alert.AlertType.INFORMATION);
                 Stage stage = (Stage) registerButton.getScene().getWindow();

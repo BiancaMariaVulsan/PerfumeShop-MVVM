@@ -27,14 +27,15 @@ public class AdminVM {
         return adminVM;
     }
 
-    public void editPerson(TableView<Person> personTableView) {
-        Person item = personTableView.getSelectionModel().getSelectedItem();
-        if(item == null) {
-            ViewModel.initAlarmBox("Warning", "Please select the product to be edited!", Alert.AlertType.WARNING);
-            return;
-        }
-        RegisterVM registerVM = new RegisterVM(item);
-    }
+//    public void editPerson(TableView<Person> personTableView) {
+//        Person item = personTableView.getSelectionModel().getSelectedItem();
+//        if(item == null) {
+//            ViewModel.initAlarmBox("Warning", "Please select the product to be edited!", Alert.AlertType.WARNING);
+//            return;
+//        }
+//        RegisterVM registerVM = new RegisterVM(item);
+//        registerVM.register();
+//    }
 
     public void deletePerson(TableView<Person> personTableView) {
         Person person = personTableView.getSelectionModel().getSelectedItem();

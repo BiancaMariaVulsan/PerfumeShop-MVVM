@@ -12,7 +12,7 @@ import javafx.beans.property.*;
 public class RegisterVM
 {
     private Person personToUpdate;
-    private final boolean isEditing;
+    private boolean isEditing;
     private final AddPersonCommand addPersonCommand = new AddPersonCommand();
     private final UpdatePersonCommand updatePersonCommand = new UpdatePersonCommand();
     private final GetRoleByNameCommand roleCommand = new GetRoleByNameCommand();
@@ -27,24 +27,18 @@ public class RegisterVM
     private StringProperty shopNameProperty = new SimpleStringProperty();
     private StringProperty roleNameProperty = new SimpleStringProperty();
     private BooleanProperty termsCheckProperty = new SimpleBooleanProperty();
-    private ObjectProperty<String> firstNameColumn = new SimpleObjectProperty<>();
-    private ObjectProperty<String> lastNameColumn = new SimpleObjectProperty<>();
-    private ObjectProperty<String> roleColumn = new SimpleObjectProperty<>();
+
+    private PersonVM person;
 
     public RegisterVM() {
         this.isEditing = false;
     }
 
-    public RegisterVM(Person personToUpdate) {
-        this.personToUpdate = personToUpdate;
-        this.isEditing = true;
-        firstNameProperty.set(personToUpdate.getFirstName());
-        lastNameProperty.set(personToUpdate.getLastName());
-        usernameProperty.set(personToUpdate.getUsername());
-        passwordProperty.set(personToUpdate.getPassword());
-        roleNameProperty.set(personToUpdate.getRole().name());
-//            shopChoiceBox.setDisable(!personToUpdate.getRole().equals(Role.EMPLOYEE));
-    }
+//    public RegisterVM(Person personToUpdate) {
+//        this.personToUpdate = personToUpdate;
+//        this.isEditing = true;
+
+//    }
 
     public boolean register() {
         if(!isEditing) {
@@ -74,12 +68,15 @@ public class RegisterVM
                 }
             }
         } else {
+            this.isEditing = false;
             return updatePerson();
         }
         return false;
     }
 
     private boolean updatePerson() {
+        AdminVM adminVM = AdminVM.getInstance();
+        adminVM.getPersonItems().remove(personToUpdate);
         if(roleNameProperty.get().equals("EMPLOYEE")) {
             shopCommand.setShopName(shopNameProperty.get());
             if(shopCommand.execute()) {
@@ -97,6 +94,7 @@ public class RegisterVM
                     usernameProperty.get(), passwordProperty.get());
         }
         updatePersonCommand.setPerson(personToUpdate);
+        adminVM.getPersonItems().add(personToUpdate);
         return updatePersonCommand.execute();
     }
 
@@ -184,39 +182,9 @@ public class RegisterVM
         this.termsCheckProperty.set(termsCheckProperty);
     }
 
-    public String getFirstNameColumn() {
-        return firstNameColumn.get();
-    }
-
-    public ObjectProperty<String> firstNameColumnProperty() {
-        return firstNameColumn;
-    }
-
-    public void setFirstNameColumn(String firstNameColumn) {
-        this.firstNameColumn.set(firstNameColumn);
-    }
-
-    public String getLastNameColumn() {
-        return lastNameColumn.get();
-    }
-
-    public ObjectProperty<String> lastNameColumnProperty() {
-        return lastNameColumn;
-    }
-
-    public void setLastNameColumn(String lastNameColumn) {
-        this.lastNameColumn.set(lastNameColumn);
-    }
-
-    public String getRoleColumn() {
-        return roleColumn.get();
-    }
-
-    public ObjectProperty<String> roleColumnProperty() {
-        return roleColumn;
-    }
-
-    public void setRoleColumn(String roleColumn) {
-        this.roleColumn.set(roleColumn);
+    public void setPerson(PersonVM person) {
+        this.isEditing = true;
+        this.person = person;
+        this.personToUpdate = new Person(person.firstNameProperty().get(), person.lastNameProperty().get(), person.roleProperty().get(), person.usernameProperty().get(), person.passwordProperty().get());
     }
 }
