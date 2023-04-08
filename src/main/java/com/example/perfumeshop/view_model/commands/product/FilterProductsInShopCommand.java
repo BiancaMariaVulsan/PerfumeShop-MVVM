@@ -7,13 +7,13 @@ import com.example.perfumeshop.view_model.commands.ICommand;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FilterProductsCommand implements ICommand {
+public class FilterProductsInShopCommand implements ICommand {
     private String brand;
     private final boolean availability;
     private final double price;
-    private List<ShopProduct> filteredList;
+    private final List<ShopProduct> filteredList;
 
-    public FilterProductsCommand(List<ShopProduct> filteredList, String brand, boolean availability, double price) {
+    public FilterProductsInShopCommand(List<ShopProduct> filteredList, String brand, boolean availability, double price) {
         this.brand = brand;
         this.availability = availability;
         this.price = price;

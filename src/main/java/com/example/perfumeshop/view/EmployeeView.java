@@ -49,7 +49,7 @@ public class EmployeeView implements Initializable {
         this.idShop = idShop;
     }
 
-    void bind() {
+    private void bind() {
         brandFilter.textProperty().bindBidirectional(employeeVM.brandFilterProperty());
         availabilityFilter.selectedProperty().bindBidirectional(employeeVM.availabilityFilterProperty());
         StringConverter<Number> converter = new NumberStringConverter();

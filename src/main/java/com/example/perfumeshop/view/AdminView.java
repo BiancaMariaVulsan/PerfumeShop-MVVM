@@ -33,7 +33,7 @@ public class AdminView implements Initializable {
     private final ViewModel viewModel = new ViewModel();
     private final AdminVM adminVM = AdminVM.getInstance();
 
-    public void bind() {
+    private void bind() {
         firstNameColumn.textProperty().bindBidirectional(adminVM.firstNameColumnProperty());
         lastNameColumn.textProperty().bindBidirectional(adminVM.lastNameColumnProperty());
         roleColumn.textProperty().bindBidirectional(adminVM.roleColumnProperty());

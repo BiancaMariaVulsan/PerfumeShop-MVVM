@@ -1,29 +1,28 @@
 package com.example.perfumeshop.view;
 
-import com.example.perfumeshop.model.Product;
+import com.example.perfumeshop.view_model.ManagerVM;
 import com.example.perfumeshop.view_model.ViewModel;
-import com.example.perfumeshop.view_model.commands.ProductPresenter;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ManagerView implements Initializable {
     @FXML
-    private TableView<Product> productTableView;
-    private final ObservableList<Product> productItems = FXCollections.observableArrayList();
+    private TableView productTableView;
+
     @FXML
-    private TableColumn<Product, String> nameColumn;
+    private TableColumn nameColumn;
     @FXML
-    private TableColumn<Product ,String> brandColumn;
+    private TableColumn brandColumn;
     @FXML
-    private TableColumn<Product, Boolean> availabilityColumn;
+    private TableColumn availabilityColumn;
     @FXML
-    private TableColumn<Product, Number> priceColumn;
+    private TableColumn priceColumn;
 
     @FXML
     private TextField nameFilter;
@@ -41,23 +40,29 @@ public class ManagerView implements Initializable {
     @FXML
     private Button sortPriceButton;
 
-    ProductPresenter productPresenter = new ProductPresenter();
+    private final ManagerVM managerVM = ManagerVM.getInstance();
+
+    private void bind() {
+        nameFilter.textProperty().bindBidirectional(managerVM.nameFilterProperty());
+        brandFilter.textProperty().bindBidirectional(managerVM.brandFilterProperty());
+        availabilityFilter.selectedProperty().bindBidirectional(managerVM.availabilityFilterProperty());
+        StringConverter<Number> converter = new NumberStringConverter();
+        priceFilter.textProperty().bindBidirectional(managerVM.priceFilterProperty(),converter);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn);
+        bind();
+        ViewModel.populateTableProducts(productTableView, managerVM.getProductItems(), nameColumn, brandColumn, availabilityColumn, priceColumn);
 
         filterButton.setOnAction(e -> {
-            var filteredItems = productPresenter.filterProducts(nameFilter, brandFilter, availabilityFilter, priceFilter);
-            ViewModel.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, filteredItems);
+            managerVM.filter();
         });
         sortNameButton.setOnAction(e -> {
-            var sortedItems = productPresenter.sortByName();
-            ViewModel.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, sortedItems);
+            managerVM.sortByName();
         });
         sortPriceButton.setOnAction(e -> {
-            var sortedItems = productPresenter.sortByPrice();
-            ViewModel.populateTableProductsFiltered(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, sortedItems);
+            managerVM.sortByPrice();
         });
     }
 }

@@ -18,7 +18,7 @@ public class LogInView {
 
     private final LogInVM logInVM = new LogInVM();
 
-    void bind() {
+    private void bind() {
         usernameTextField.textProperty().bindBidirectional(logInVM.usernamePropertyProperty());
         passwordTextField.textProperty().bindBidirectional(logInVM.passwordPropertyProperty());
     }

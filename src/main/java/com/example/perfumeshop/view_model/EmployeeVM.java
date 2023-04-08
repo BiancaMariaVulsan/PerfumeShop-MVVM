@@ -2,7 +2,7 @@ package com.example.perfumeshop.view_model;
 
 import com.example.perfumeshop.model.ShopProduct;
 import com.example.perfumeshop.view_model.commands.product.DeleteProductCommand;
-import com.example.perfumeshop.view_model.commands.product.FilterProductsCommand;
+import com.example.perfumeshop.view_model.commands.product.FilterProductsInShopCommand;
 import com.example.perfumeshop.view_model.commands.product.GetProductsFromShopCommand;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -34,7 +34,7 @@ public class EmployeeVM {
         GetProductsFromShopCommand getProductsFromShopCommand = new GetProductsFromShopCommand(idShop);
         getProductsFromShopCommand.execute();
         List<ShopProduct> shopProductList = getProductsFromShopCommand.getProductList();
-        FilterProductsCommand filterProductsCommand = new FilterProductsCommand(shopProductList, getBrandFilter(), isAvailabilityFilter(), getPriceFilter());
+        FilterProductsInShopCommand filterProductsCommand = new FilterProductsInShopCommand(shopProductList, getBrandFilter(), isAvailabilityFilter(), getPriceFilter());
         filterProductsCommand.execute();
     }
 

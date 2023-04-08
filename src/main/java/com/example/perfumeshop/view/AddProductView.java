@@ -47,7 +47,7 @@ public class AddProductView implements Initializable {
         this.addProductVM = new AddProductVM(idShop, productVM);
     }
 
-    void bind() {
+    private void bind() {
         nameText.textProperty().bindBidirectional(addProductVM.nameProperty());
         brandText.textProperty().bindBidirectional(addProductVM.brandProperty());
         StringConverter<Number> converter = new NumberStringConverter();
