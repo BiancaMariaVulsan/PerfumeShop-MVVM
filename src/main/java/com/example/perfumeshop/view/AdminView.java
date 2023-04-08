@@ -1,6 +1,5 @@
 package com.example.perfumeshop.view;
 
-import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.view_model.AdminVM;
 import com.example.perfumeshop.view_model.PersonVM;
 import com.example.perfumeshop.view_model.ViewModel;
@@ -42,7 +41,7 @@ public class AdminView implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<Person> items = adminVM.getPersonItems();
+        ObservableList items = adminVM.getPersonItems();
         viewModel.populateTablePersons(personTableView, items, firstNameColumn, lastNameColumn, roleColumn);
         adminVM.setPersonItems(items);
         bind();
@@ -63,11 +62,11 @@ public class AdminView implements Initializable {
             ViewModel.loadFXML("/com/example/perfumeshop/register-view.fxml", controllerFactory);
         });
         deleteButton.setOnAction(e -> {
-            PersonVM personVM = new PersonVM((Person) personTableView.getSelectionModel().getSelectedItem());
+            PersonVM personVM = new PersonVM(personTableView.getSelectionModel().getSelectedItem());
             adminVM.deletePerson(personVM);
         });
         editButton.setOnAction(e -> {
-            PersonVM personVM = new PersonVM((Person) personTableView.getSelectionModel().getSelectedItem());
+            PersonVM personVM = new PersonVM(personTableView.getSelectionModel().getSelectedItem());
             Callback<Class<?>, Object> controllerFactory = type -> {
                 if (type == RegisterView.class) {
                     return new RegisterView(personVM);

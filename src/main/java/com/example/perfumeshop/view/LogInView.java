@@ -1,6 +1,5 @@
 package com.example.perfumeshop.view;
 
-import com.example.perfumeshop.model.Role;
 import com.example.perfumeshop.view_model.LogInVM;
 import com.example.perfumeshop.view_model.ViewModel;
 import javafx.fxml.FXML;

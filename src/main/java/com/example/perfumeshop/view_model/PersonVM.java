@@ -15,13 +15,13 @@ public class PersonVM {
     private final ObjectProperty<Role> role;
     private final Person person;
 
-    public PersonVM(Person person) {
-        this.person = person;
-        this.firstName = new SimpleStringProperty(person.getFirstName());
-        this.lastName = new SimpleStringProperty(person.getLastName());
-        this.username = new SimpleStringProperty(person.getUsername());
-        this.password = new SimpleStringProperty(person.getPassword());
-        this.role = new SimpleObjectProperty<>(person.getRole());
+    public PersonVM(Object person) {
+        this.person = (Person) person;
+        this.firstName = new SimpleStringProperty(this.person.getFirstName());
+        this.lastName = new SimpleStringProperty(this.person.getLastName());
+        this.username = new SimpleStringProperty(this.person.getUsername());
+        this.password = new SimpleStringProperty(this.person.getPassword());
+        this.role = new SimpleObjectProperty<>(this.person.getRole());
     }
 
     public StringProperty firstNameProperty() {
