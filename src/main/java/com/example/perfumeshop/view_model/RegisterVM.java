@@ -3,11 +3,12 @@ package com.example.perfumeshop.view_model;
 import com.example.perfumeshop.model.Employee;
 import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Role;
-import com.example.perfumeshop.view_model.commands.AddPersonCommand;
-import com.example.perfumeshop.view_model.commands.GetRoleByNameCommand;
-import com.example.perfumeshop.view_model.commands.GetShopIdByNameCommand;
-import com.example.perfumeshop.view_model.commands.UpdatePersonCommand;
+import com.example.perfumeshop.model.Shop;
+import com.example.perfumeshop.view_model.commands.*;
 import javafx.beans.property.*;
+import javafx.scene.control.ChoiceBox;
+
+import java.util.List;
 
 public class RegisterVM
 {
@@ -94,6 +95,13 @@ public class RegisterVM
         return false;
     }
 
+    public void initShopCheckBox(ChoiceBox<String> shopChoiceBox) {
+        List<Shop> shops = GetShopsCommand.getShops();
+        for(Shop shop: shops) {
+            shopChoiceBox.getItems().add(shop.getName());
+        }
+       shopNameProperty.set(shops.get(0).getName()); // suppose there is at least one shop
+    }
 
     public StringProperty usernamePropertyProperty() {
         return usernameProperty;

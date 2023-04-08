@@ -1,11 +1,8 @@
 package com.example.perfumeshop.view;
 
-import com.example.perfumeshop.model.Role;
-import com.example.perfumeshop.model.Shop;
 import com.example.perfumeshop.view_model.PersonVM;
 import com.example.perfumeshop.view_model.RegisterVM;
 import com.example.perfumeshop.view_model.ViewModel;
-import com.example.perfumeshop.view_model.commands.ShopPresenter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -13,7 +10,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -67,7 +63,7 @@ public class RegisterView implements Initializable {
         registerButton.setDisable(true);
 //        setProgressIndicator();
         initRoleCheckBox();
-        initShopCheckBox();
+        registerVM.initShopCheckBox(shopChoiceBox);
         bind();
 
         if(isEditing) {
@@ -75,7 +71,9 @@ public class RegisterView implements Initializable {
             registerVM.setLastNameProperty(personVM.lastNameProperty().get());
             registerVM.setUsernameProperty(personVM.usernameProperty().get());
             registerVM.setPasswordProperty(personVM.passwordProperty().get());
-//            shopChoiceBox.setDisable(!personVM.roleProperty().get().equals(Role.EMPLOYEE));
+            String roleName = String.valueOf(personVM.roleProperty().get());
+            registerVM.setRoleNameProperty(roleName);
+            shopChoiceBox.setDisable(!roleName.equals("EMPLOYEE"));
         }
 
         exitButton.setOnAction(actionEvent -> {
@@ -107,16 +105,8 @@ public class RegisterView implements Initializable {
             }
         });
         roleChoiceBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
-            shopChoiceBox.setDisable(!newValue.equals(Role.EMPLOYEE));
+            shopChoiceBox.setDisable(!newValue.equals("EMPLOYEE"));
         });
-    }
-
-    public void initShopCheckBox() {
-        List<Shop> shops = ShopPresenter.getShops();
-        for(Shop shop: shops) {
-            shopChoiceBox.getItems().add(shop.getName());
-        }
-        registerVM.setShopNameProperty(shops.get(0).getName()); // suppose there is at least one shop
     }
 
     private void initRoleCheckBox() {

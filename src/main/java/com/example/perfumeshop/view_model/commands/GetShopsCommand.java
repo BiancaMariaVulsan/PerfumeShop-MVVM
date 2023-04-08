@@ -5,7 +5,7 @@ import com.example.perfumeshop.model.persistence.ShopPersistence;
 
 import java.util.List;
 
-public class ShopPresenter {
+public class GetShopsCommand {
     static ShopPersistence shopPersistence = new ShopPersistence();
 
     public static List<Shop> getShops() {
