@@ -77,7 +77,9 @@ public class EmployeeView implements Initializable {
         });
         deleteButton.setOnAction(e -> {
             ProductVM productVM = new ProductVM(productTableView.getSelectionModel().getSelectedItem());
-            employeeVM.deleteProduct(productVM, idShop);
+            if(!employeeVM.deleteProduct(productVM, idShop)) {
+                ViewModel.initAlarmBox("Error", "Eroor while trying to delete the product!", Alert.AlertType.ERROR);
+            }
         });
         filterButton.setOnAction(e -> {
             employeeVM.filterProducts(idShop);

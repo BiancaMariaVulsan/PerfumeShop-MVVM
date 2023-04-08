@@ -1,6 +1,8 @@
 package com.example.perfumeshop.view_model;
 
+import com.example.perfumeshop.model.Product;
 import com.example.perfumeshop.model.ShopProduct;
+import com.example.perfumeshop.view_model.commands.product.DeleteProductCommand;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,8 +20,11 @@ public class EmployeeVM {
        return employeeVM;
     }
 
-    public void deleteProduct(ProductVM product, int idShop) {
-
+    public boolean deleteProduct(ProductVM product, int idShop) {
+        ShopProduct productToDel = productItems.stream().filter(p -> p.getProduct().getId() == (product.getId())).toList().get(0);
+        DeleteProductCommand deleteProductCommand = new DeleteProductCommand(idShop, productToDel.getProduct());
+        productItems.remove(productToDel);
+        return deleteProductCommand.execute();
     }
 
     public void filterProducts(int idShop) {
