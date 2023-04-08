@@ -3,7 +3,7 @@ package com.example.perfumeshop.view_model;
 import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Role;
 import com.example.perfumeshop.view_model.commands.GetShopCommand;
-import com.example.perfumeshop.view_model.commands.LoginCommand;
+import com.example.perfumeshop.view_model.commands.person.LoginCommand;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;

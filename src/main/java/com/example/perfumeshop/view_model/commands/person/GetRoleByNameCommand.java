@@ -1,6 +1,7 @@
-package com.example.perfumeshop.view_model.commands;
+package com.example.perfumeshop.view_model.commands.person;
 
 import com.example.perfumeshop.model.Role;
+import com.example.perfumeshop.view_model.commands.ICommand;
 
 public class GetRoleByNameCommand implements ICommand {
     private String roleName;

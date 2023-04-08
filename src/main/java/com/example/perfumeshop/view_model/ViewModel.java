@@ -3,7 +3,7 @@ package com.example.perfumeshop.view_model;
 import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Product;
 import com.example.perfumeshop.model.ShopProduct;
-import com.example.perfumeshop.view_model.commands.GetPersonsCommand;
+import com.example.perfumeshop.view_model.commands.person.GetPersonsCommand;
 import com.example.perfumeshop.view_model.commands.ProductPresenter;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyDoubleWrapper;

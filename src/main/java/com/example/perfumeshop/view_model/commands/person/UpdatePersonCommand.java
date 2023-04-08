@@ -1,12 +1,13 @@
-package com.example.perfumeshop.view_model.commands;
+package com.example.perfumeshop.view_model.commands.person;
 
 import com.example.perfumeshop.model.Employee;
 import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Role;
 import com.example.perfumeshop.model.persistence.EmployeePersistence;
 import com.example.perfumeshop.model.persistence.PersonPersistence;
+import com.example.perfumeshop.view_model.commands.ICommand;
 
-public class AddPersonCommand implements ICommand {
+public class UpdatePersonCommand implements ICommand {
     private Person person;
     private static final PersonPersistence personPersistence = new PersonPersistence();
     private static final EmployeePersistence employeePersistence = new EmployeePersistence();
@@ -14,10 +15,10 @@ public class AddPersonCommand implements ICommand {
     @Override
     public boolean execute() {
         try {
-            if (person.getRole() != Role.EMPLOYEE) {
-                personPersistence.insert(person);
+            if(person.getRole().equals(Role.EMPLOYEE)) {
+                employeePersistence.update((Employee) person);
             } else {
-                employeePersistence.insert((Employee) person);
+                personPersistence.update(person);
             }
         } catch (Exception e) {
             return false;

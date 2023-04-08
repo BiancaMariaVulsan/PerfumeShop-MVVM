@@ -4,7 +4,7 @@ import com.example.perfumeshop.model.Product;
 import com.example.perfumeshop.view_model.ViewModel;
 import com.example.perfumeshop.view_model.commands.ICommand;
 import com.example.perfumeshop.view_model.commands.ProductPresenter;
-import com.example.perfumeshop.view_model.commands.FilterProductsCommand;
+import com.example.perfumeshop.view_model.commands.product.FilterProductsCommand;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

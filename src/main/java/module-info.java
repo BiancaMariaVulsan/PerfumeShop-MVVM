@@ -20,4 +20,8 @@ module com.example.perfumeshop {
     opens com.example.perfumeshop.view_model.commands to javafx.fxml;
     exports com.example.perfumeshop.view;
     opens com.example.perfumeshop.view to javafx.fxml;
+    exports com.example.perfumeshop.view_model.commands.person;
+    opens com.example.perfumeshop.view_model.commands.person to javafx.fxml;
+    exports com.example.perfumeshop.view_model.commands.product;
+    opens com.example.perfumeshop.view_model.commands.product to javafx.fxml;
 }

@@ -1,30 +1,29 @@
 package com.example.perfumeshop.view;
 
-import com.example.perfumeshop.model.ShopProduct;
+import com.example.perfumeshop.view_model.EmployeeVM;
+import com.example.perfumeshop.view_model.ProductVM;
 import com.example.perfumeshop.view_model.ViewModel;
-import com.example.perfumeshop.view_model.commands.ProductPresenter;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EmployeeView implements Initializable {
     @FXML
-    private TableView<ShopProduct> productTableView;
-    private final ObservableList<ShopProduct> productItems = FXCollections.observableArrayList();
+    private TableView productTableView;
     @FXML
-    private TableColumn<ShopProduct, String> nameColumn;
+    private TableColumn nameColumn;
     @FXML
-    private TableColumn<ShopProduct ,String> brandColumn;
+    private TableColumn brandColumn;
     @FXML
-    private TableColumn<ShopProduct, Boolean> availabilityColumn;
+    private TableColumn availabilityColumn;
     @FXML
-    private TableColumn<ShopProduct, Number> priceColumn;
+    private TableColumn priceColumn;
 
     @FXML
     private Button addButton;
@@ -43,19 +42,28 @@ public class EmployeeView implements Initializable {
     private TextField priceFilter;
 
     private final int idShop;
-    private final ProductPresenter productPresenter = new ProductPresenter();
 
-    public EmployeeView(int isShop) {
-        this.idShop = isShop;
+    private final EmployeeVM employeeVM = EmployeeVM.getInstance();
+
+    public EmployeeView(int idShop) {
+        this.idShop = idShop;
+    }
+
+    void bind() {
+        brandFilter.textProperty().bindBidirectional(employeeVM.brandFilterProperty());
+        availabilityFilter.selectedProperty().bindBidirectional(employeeVM.availabilityFilterProperty());
+        StringConverter<Number> converter = new NumberStringConverter();
+        priceFilter.textProperty().bindBidirectional(employeeVM.priceFilterProperty(),converter);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
+        bind();
+        ViewModel.populateTableProducts(productTableView, employeeVM.getProductItems(), nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
         addButton.setOnAction(e -> {
             Callback<Class<?>, Object> controllerFactory = type -> {
                 if (type == AddProductView.class) {
-                    return new AddProductView(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
+                    return new AddProductView(idShop);
                 } else {
                     try {
                         return type.newInstance();
@@ -68,22 +76,21 @@ public class EmployeeView implements Initializable {
             ViewModel.loadFXML("/com/example/perfumeshop/add-product-view.fxml", controllerFactory);
         });
         deleteButton.setOnAction(e -> {
-            var products = productPresenter.deleteProduct(productTableView.getSelectionModel().getSelectedItem().getProduct(), idShop);
-            ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, products);
+            ProductVM productVM = new ProductVM(productTableView.getSelectionModel().getSelectedItem());
+            employeeVM.deleteProduct(productVM, idShop);
         });
         filterButton.setOnAction(e -> {
-            var filteredItems = productPresenter.filterProducts(brandFilter, availabilityFilter, priceFilter, idShop);
-            ViewModel.populateTableProducts(productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, filteredItems);
+            employeeVM.filterProducts(idShop);
         });
         editButton.setOnAction(e -> {
-            ShopProduct product = productTableView.getSelectionModel().getSelectedItem();
-            if(product == null) {
+            ProductVM product = new ProductVM(productTableView.getSelectionModel().getSelectedItem());
+            if(productTableView.getSelectionModel().getSelectedItem() == null) {
                 ViewModel.initAlarmBox("Warning", "Please select the product to be updated!", Alert.AlertType.WARNING);
                 return;
             }
             Callback<Class<?>, Object> controllerFactory = type -> {
                 if (type == AddProductView.class) {
-                    return new AddProductView(product, productTableView, productItems, nameColumn, brandColumn, availabilityColumn, priceColumn, idShop);
+                    return new AddProductView(product, idShop);
                 } else {
                     try {
                         return type.newInstance();

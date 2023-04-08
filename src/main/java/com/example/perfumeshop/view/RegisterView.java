@@ -35,7 +35,7 @@ public class RegisterView implements Initializable {
     @FXML
     private ChoiceBox<String> shopChoiceBox;
 
-    private boolean isEditing;
+    private final boolean isEditing;
     private final RegisterVM registerVM = new RegisterVM();
     private PersonVM personVM;
 
@@ -74,6 +74,7 @@ public class RegisterView implements Initializable {
             String roleName = String.valueOf(personVM.roleProperty().get());
             registerVM.setRoleNameProperty(roleName);
             shopChoiceBox.setDisable(!roleName.equals("EMPLOYEE"));
+            // todo: initialize the shop
         }
 
         exitButton.setOnAction(actionEvent -> {

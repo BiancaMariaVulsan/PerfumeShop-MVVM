@@ -1,14 +1,12 @@
 package com.example.perfumeshop.view_model;
 
 import com.example.perfumeshop.model.Person;
-import com.example.perfumeshop.view_model.commands.DeletePersonCommand;
+import com.example.perfumeshop.view_model.commands.person.DeletePersonCommand;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-
-import java.util.stream.Collectors;
 
 public class AdminVM {
 

@@ -5,6 +5,9 @@ import com.example.perfumeshop.model.Person;
 import com.example.perfumeshop.model.Role;
 import com.example.perfumeshop.model.Shop;
 import com.example.perfumeshop.view_model.commands.*;
+import com.example.perfumeshop.view_model.commands.person.AddPersonCommand;
+import com.example.perfumeshop.view_model.commands.person.GetRoleByNameCommand;
+import com.example.perfumeshop.view_model.commands.person.UpdatePersonCommand;
 import javafx.beans.property.*;
 import javafx.scene.control.ChoiceBox;
 
