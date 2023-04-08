@@ -39,6 +39,17 @@ public class ManagerView implements Initializable {
     private Button sortNameButton;
     @FXML
     private Button sortPriceButton;
+    @FXML
+    private Button saveCSV;
+    @FXML
+    private Button saveJSON;
+    @FXML
+    private Button saveXML;
+    @FXML
+    private Button saveTXT;
+
+    @FXML
+    private ChoiceBox<String> shopChoice;
 
     private final ManagerVM managerVM = ManagerVM.getInstance();
 
@@ -48,12 +59,14 @@ public class ManagerView implements Initializable {
         availabilityFilter.selectedProperty().bindBidirectional(managerVM.availabilityFilterProperty());
         StringConverter<Number> converter = new NumberStringConverter();
         priceFilter.textProperty().bindBidirectional(managerVM.priceFilterProperty(),converter);
+        shopChoice.valueProperty().bindBidirectional(managerVM.shopNamePropertyProperty());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bind();
         ViewModel.populateTableProducts(productTableView, managerVM.getProductItems(), nameColumn, brandColumn, availabilityColumn, priceColumn);
+        managerVM.initShopCheckBox(shopChoice);
 
         filterButton.setOnAction(e -> {
             managerVM.filter();
@@ -63,6 +76,18 @@ public class ManagerView implements Initializable {
         });
         sortPriceButton.setOnAction(e -> {
             managerVM.sortByPrice();
+        });
+        saveCSV.setOnAction(e -> {
+
+        });
+        saveJSON.setOnAction(e -> {
+
+        });
+        saveXML.setOnAction(e -> {
+
+        });
+        saveTXT.setOnAction(e -> {
+
         });
     }
 }

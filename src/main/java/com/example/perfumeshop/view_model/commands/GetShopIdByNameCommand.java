@@ -1,8 +1,7 @@
 package com.example.perfumeshop.view_model.commands;
 
+import com.example.perfumeshop.model.Shop;
 import com.example.perfumeshop.model.persistence.ShopPersistence;
-
-import java.util.stream.Collectors;
 
 public class GetShopIdByNameCommand implements ICommand {
     String shopName;
@@ -13,7 +12,7 @@ public class GetShopIdByNameCommand implements ICommand {
     @Override
     public boolean execute() {
         try {
-            shopId = shopPersistence.findAll().stream().filter(s -> s.getName().equals(shopName)).map(s -> s.getId()).collect(Collectors.toList()).get(0);
+            shopId = shopPersistence.findAll().stream().filter(s -> s.getName().equals(shopName)).map(Shop::getId).toList().get(0);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -33,6 +33,14 @@ public class EmployeeView implements Initializable {
     private Button editButton;
     @FXML
     private Button filterButton;
+    @FXML
+    private Button saveCSV;
+    @FXML
+    private Button saveJSON;
+    @FXML
+    private Button saveXML;
+    @FXML
+    private Button saveTXT;
 
     @FXML
     private TextField brandFilter;
@@ -104,6 +112,18 @@ public class EmployeeView implements Initializable {
                 }
             };
             ViewModel.loadFXML("/com/example/perfumeshop/add-product-view.fxml", controllerFactory);
+        });
+        saveCSV.setOnAction(e -> {
+
+        });
+        saveJSON.setOnAction(e -> {
+
+        });
+        saveXML.setOnAction(e -> {
+
+        });
+        saveTXT.setOnAction(e -> {
+
         });
     }
 }
