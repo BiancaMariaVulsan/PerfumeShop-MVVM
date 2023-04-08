@@ -27,8 +27,8 @@ public class ManagerVM {
     public void filter() {
         GetProductsCommand getProductsCommand = new GetProductsCommand();
         getProductsCommand.execute();
-        List<Product> shopProductList = getProductsCommand.getProductList();
-        FilterAllProductsCommand filterAllProductsCommand = new FilterAllProductsCommand(shopProductList, getBrandFilter(), isAvailabilityFilter(), getPriceFilter());
+        List<Product> productList = getProductsCommand.getProductList();
+        FilterAllProductsCommand filterAllProductsCommand = new FilterAllProductsCommand(productList, getNameFilter(), getBrandFilter(), isAvailabilityFilter(), getPriceFilter());
         filterAllProductsCommand.execute();
     }
 
