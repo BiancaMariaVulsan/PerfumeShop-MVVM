@@ -1,11 +1,14 @@
 package com.example.perfumeshop.view_model;
 
-import com.example.perfumeshop.model.Product;
 import com.example.perfumeshop.model.ShopProduct;
 import com.example.perfumeshop.view_model.commands.product.DeleteProductCommand;
+import com.example.perfumeshop.view_model.commands.product.FilterProductsCommand;
+import com.example.perfumeshop.view_model.commands.product.GetProductsFromShopCommand;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.List;
 
 public class EmployeeVM {
     private final StringProperty brandFilter = new SimpleStringProperty();
@@ -28,7 +31,11 @@ public class EmployeeVM {
     }
 
     public void filterProducts(int idShop) {
-
+        GetProductsFromShopCommand getProductsFromShopCommand = new GetProductsFromShopCommand(idShop);
+        getProductsFromShopCommand.execute();
+        List<ShopProduct> shopProductList = getProductsFromShopCommand.getProductList();
+        FilterProductsCommand filterProductsCommand = new FilterProductsCommand(shopProductList, getBrandFilter(), isAvailabilityFilter(), getPriceFilter());
+        filterProductsCommand.execute();
     }
 
     public ObservableList<ShopProduct> getProductItems() {

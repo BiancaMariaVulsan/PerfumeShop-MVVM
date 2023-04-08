@@ -54,6 +54,7 @@ public class EmployeeView implements Initializable {
         availabilityFilter.selectedProperty().bindBidirectional(employeeVM.availabilityFilterProperty());
         StringConverter<Number> converter = new NumberStringConverter();
         priceFilter.textProperty().bindBidirectional(employeeVM.priceFilterProperty(),converter);
+
     }
 
     @Override
