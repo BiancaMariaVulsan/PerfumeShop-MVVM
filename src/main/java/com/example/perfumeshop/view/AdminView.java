@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
@@ -29,6 +30,10 @@ public class AdminView implements Initializable {
     private Button deleteButton;
     @FXML
     private Button editButton;
+    @FXML
+    private Button filterButton;
+    @FXML
+    private ChoiceBox<String> roleChoice;
 
     private final ViewModel viewModel = new ViewModel();
     private final AdminVM adminVM = AdminVM.getInstance();
@@ -37,10 +42,12 @@ public class AdminView implements Initializable {
         firstNameColumn.textProperty().bindBidirectional(adminVM.firstNameColumnProperty());
         lastNameColumn.textProperty().bindBidirectional(adminVM.lastNameColumnProperty());
         roleColumn.textProperty().bindBidirectional(adminVM.roleColumnProperty());
+        roleChoice.valueProperty().bindBidirectional(adminVM.roleProperty());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        initRoleCheckBox();
         ObservableList items = adminVM.getPersonItems();
         viewModel.populateTablePersons(personTableView, items, firstNameColumn, lastNameColumn, roleColumn);
         adminVM.setPersonItems(items);
@@ -81,5 +88,14 @@ public class AdminView implements Initializable {
             };
             ViewModel.loadFXML("/com/example/perfumeshop/register-view.fxml", controllerFactory);
         });
+        filterButton.setOnAction(e -> {
+            adminVM.filter();
+        });
+    }
+    private void initRoleCheckBox() {
+        roleChoice.getItems().add("EMPLOYEE");
+        roleChoice.getItems().add("MANAGER");
+        roleChoice.getItems().add("ADMIN");
+        adminVM.setRoleProperty("EMPLOYEE");
     }
 }
