@@ -78,16 +78,16 @@ public class ManagerView implements Initializable {
             managerVM.sortByPrice();
         });
         saveCSV.setOnAction(e -> {
-
+            managerVM.saveCSV();
         });
         saveJSON.setOnAction(e -> {
-
+            managerVM.saveJson();
         });
         saveXML.setOnAction(e -> {
-
+            managerVM.saveXML();
         });
         saveTXT.setOnAction(e -> {
-
+            managerVM.saveTXT();
         });
     }
 }

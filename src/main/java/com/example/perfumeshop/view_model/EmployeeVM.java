@@ -38,6 +38,22 @@ public class EmployeeVM {
         filterProductsCommand.execute();
     }
 
+    public void saveCSV() {
+
+    }
+
+    public void saveJson() {
+
+    }
+
+    public void saveXML() {
+
+    }
+
+    public void saveTXT() {
+
+    }
+
     public ObservableList<ShopProduct> getProductItems() {
         return productItems;
     }

@@ -114,16 +114,16 @@ public class EmployeeView implements Initializable {
             ViewModel.loadFXML("/com/example/perfumeshop/add-product-view.fxml", controllerFactory);
         });
         saveCSV.setOnAction(e -> {
-
+            employeeVM.saveCSV();
         });
         saveJSON.setOnAction(e -> {
-
+            employeeVM.saveJson();
         });
         saveXML.setOnAction(e -> {
-
+            employeeVM.saveXML();
         });
         saveTXT.setOnAction(e -> {
-
+            employeeVM.saveTXT();
         });
     }
 }

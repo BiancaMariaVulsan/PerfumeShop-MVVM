@@ -11,6 +11,8 @@ module com.example.perfumeshop {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires java.desktop;
+    requires com.fasterxml.jackson.databind;
+    requires java.xml.bind;
 
     opens com.example.perfumeshop to javafx.fxml;
     exports com.example.perfumeshop;
@@ -24,4 +26,8 @@ module com.example.perfumeshop {
     opens com.example.perfumeshop.view_model.commands.person to javafx.fxml;
     exports com.example.perfumeshop.view_model.commands.product;
     opens com.example.perfumeshop.view_model.commands.product to javafx.fxml;
+
+    exports com.example.perfumeshop.model;
+    opens com.example.perfumeshop.view_model.commands.file to java.xml.bind;
+    opens com.example.perfumeshop.model to java.xml.bind; // Add this line
 }

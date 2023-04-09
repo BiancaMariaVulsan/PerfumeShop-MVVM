@@ -4,6 +4,10 @@ import com.example.perfumeshop.model.Product;
 import com.example.perfumeshop.model.Shop;
 import com.example.perfumeshop.view_model.commands.GetShopIdByNameCommand;
 import com.example.perfumeshop.view_model.commands.GetShopsCommand;
+import com.example.perfumeshop.view_model.commands.file.SaveCSVCommand;
+import com.example.perfumeshop.view_model.commands.file.SaveJsonCommand;
+import com.example.perfumeshop.view_model.commands.file.SaveTxtCommand;
+import com.example.perfumeshop.view_model.commands.file.SaveXMLCommand;
 import com.example.perfumeshop.view_model.commands.product.FilterAllProductsCommand;
 import com.example.perfumeshop.view_model.commands.product.GetProductsCommand;
 import com.example.perfumeshop.view_model.commands.product.SortProductsCommand;
@@ -19,7 +23,7 @@ public class ManagerVM {
     private final StringProperty brandFilter = new SimpleStringProperty();
     private final BooleanProperty availabilityFilter = new SimpleBooleanProperty();
     private final DoubleProperty priceFilter = new SimpleDoubleProperty();
-    private StringProperty shopNameProperty = new SimpleStringProperty();
+    private final StringProperty shopNameProperty = new SimpleStringProperty();
     private final ObservableList productItems = FXCollections.observableArrayList();
 
     // singleton
@@ -57,6 +61,26 @@ public class ManagerVM {
             shopChoiceBox.getItems().add(shop.getName());
         }
         shopNameProperty.set(shops.get(0).getName()); // suppose there is at least one shop
+    }
+
+    public void saveCSV() {
+        SaveCSVCommand saveCSVCommand = new SaveCSVCommand(productItems,"products.csv");
+        saveCSVCommand.execute();
+    }
+
+    public void saveJson() {
+        SaveJsonCommand saveJsonCommand = new SaveJsonCommand(productItems, "products.json");
+        saveJsonCommand.execute();
+    }
+
+    public void saveXML() {
+        SaveXMLCommand saveXMLCommand = new SaveXMLCommand(productItems, "products.xml");
+        saveXMLCommand.execute();
+    }
+
+    public void saveTXT() {
+        SaveTxtCommand saveTxtCommand = new SaveTxtCommand(productItems, "products.txt");
+        saveTxtCommand.execute();
     }
 
     public String getNameFilter() {
