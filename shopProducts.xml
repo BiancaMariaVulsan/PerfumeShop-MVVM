@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<shopProducts>
+    <shopProduct>
+        <stock>0</stock>
+    </shopProduct>
+    <shopProduct>
+        <stock>5</stock>
+    </shopProduct>
+</shopProducts>

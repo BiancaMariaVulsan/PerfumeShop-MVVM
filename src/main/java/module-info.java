@@ -29,5 +29,6 @@ module com.example.perfumeshop {
 
     exports com.example.perfumeshop.model;
     opens com.example.perfumeshop.view_model.commands.file to java.xml.bind;
-    opens com.example.perfumeshop.model to java.xml.bind; // Add this line
+//    opens com.example.perfumeshop.model to java.xml.bind; // Add this line
+    opens com.example.perfumeshop.model;
 }

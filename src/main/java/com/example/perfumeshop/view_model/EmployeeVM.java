@@ -1,6 +1,10 @@
 package com.example.perfumeshop.view_model;
 
 import com.example.perfumeshop.model.ShopProduct;
+import com.example.perfumeshop.view_model.commands.file.SaveSpCSVCommand;
+import com.example.perfumeshop.view_model.commands.file.SaveSpJsonCommand;
+import com.example.perfumeshop.view_model.commands.file.SaveSpTxtCommand;
+import com.example.perfumeshop.view_model.commands.file.SaveSpXmlCommand;
 import com.example.perfumeshop.view_model.commands.product.DeleteProductCommand;
 import com.example.perfumeshop.view_model.commands.product.FilterProductsInShopCommand;
 import com.example.perfumeshop.view_model.commands.product.GetProductsFromShopCommand;
@@ -39,19 +43,23 @@ public class EmployeeVM {
     }
 
     public void saveCSV() {
-
+        SaveSpCSVCommand saveSpCSVCommand = new SaveSpCSVCommand(productItems, "shopProducts.csv");
+        saveSpCSVCommand.execute();
     }
 
     public void saveJson() {
-
+        SaveSpJsonCommand saveSpJsonCommand = new SaveSpJsonCommand(productItems, "shopProducts.json");
+        saveSpJsonCommand.execute();
     }
 
     public void saveXML() {
-
+        SaveSpXmlCommand saveSpXmlCommand = new SaveSpXmlCommand(productItems, "shopProducts.xml");
+        saveSpXmlCommand.execute();
     }
 
     public void saveTXT() {
-
+        SaveSpTxtCommand saveSpTxtCommand = new SaveSpTxtCommand(productItems, "shopProducts.txt");
+        saveSpTxtCommand.execute();
     }
 
     public ObservableList<ShopProduct> getProductItems() {
